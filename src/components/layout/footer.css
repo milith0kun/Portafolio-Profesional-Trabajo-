@@ -1,0 +1,16 @@
+.footer {
+  margin-top: 6rem;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.footer-tech {
+  color: #a0aec0;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-copyright {
+  color: #a0aec0;
+  font-size: 0.875rem;
+}
