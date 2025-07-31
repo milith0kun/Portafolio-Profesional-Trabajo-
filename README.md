@@ -43,6 +43,7 @@ portafolio-personal/
 ## 🗄️ Base de Datos
 
 ### Tablas Implementadas
+
 - ✅ **projects** - Gestión de proyectos del portafolio
 - ✅ **categories** - Categorías para proyectos
 - ✅ **technologies** - Stack tecnológico
@@ -86,6 +87,7 @@ npm run db:seed      # Poblar BD (crear cuando sea necesario)
 ## 🔧 Configuración Inicial Requerida
 
 ### 1. Base de Datos
+
 ```bash
 # 1. Crear archivo .env (usar .env.example como plantilla)
 cp .env.example .env
@@ -98,7 +100,9 @@ npm run db:push
 ```
 
 ### 2. Variables de Entorno
+
 Configurar en `.env`:
+
 ```env
 DATABASE_URL="mysql://usuario:password@localhost:3306/portafolio_db"
 NEXTAUTH_SECRET="tu-secret-aqui"
@@ -119,6 +123,7 @@ NODE_ENV="development"
 ## 📋 Próximos Pasos - FASE 2
 
 ### Funcionalidades por Implementar:
+
 - [ ] Mover contenido de app/ a src/ (App Router)
 - [ ] Crear componentes Layout base
 - [ ] Implementar páginas principales
@@ -129,6 +134,7 @@ NODE_ENV="development"
 - [ ] Implementar sistema de filtros
 
 ### Páginas a Crear:
+
 - [ ] Home (/) - Hero + proyectos destacados
 - [ ] Sobre Mí (/sobre-mi)
 - [ ] Proyectos (/proyectos)

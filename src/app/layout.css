@@ -1,0 +1,410 @@
+/* Layout principal - Dos columnas */
+.two-column-layout {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Barra de progreso */
+.scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #000000, #4d4d4d);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Indicadores de sección */
+.section-indicators {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.section-indicator {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section-indicator:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.section-indicator.active {
+  background: linear-gradient(135deg, #000000, #4d4d4d);
+  border-color: #000000;
+  transform: scale(1.2);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.indicator-number {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.section-indicator.active .indicator-number {
+  color: #ffffff;
+}
+
+/* Columna izquierda fija - Hero/Perfil */
+.left-column {
+  width: 45%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 6rem 1.5rem 2rem 3rem;
+  text-align: left;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.left-column.scrolling {
+  transform: translateX(-10px);
+}
+
+/* Columna derecha con scroll horizontal - Secciones */
+.right-column {
+  width: 55%;
+  height: 100vh;
+  margin-left: 45%;
+  margin-top: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory; /* Añadido para el snap de scroll */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Secciones de contenido para scroll horizontal */
+.content-section {
+  min-width: 60vw;
+  width: 60vw;
+  height: calc(100vh - 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center; /* Centrar contenido horizontalmente */
+  position: relative;
+  padding: 6rem 2rem 2rem 2rem;
+  box-sizing: border-box;
+  scroll-snap-align: start; /* Añadido para el snap de scroll */
+  background-color: #ffffff;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-align: left;
+  opacity: 0; /* Ocultar por defecto */
+  transform: scale(0.9) translateX(50px); /* Transformación inicial */
+  filter: blur(3px) brightness(0.8); /* Filtro inicial */
+  transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Transición para todas las propiedades */
+  transform-origin: center;
+  perspective: 1000px;
+  /* Propiedades comunes de sección */
+  width: 100%;
+  position: relative;
+  z-index: 5;
+  margin: 0;
+  padding-top: 0;
+}
+
+/* Sección activa con efectos */
+.content-section.section-active {
+  opacity: 1;
+  transform: scale(1) translateX(0px);
+  filter: blur(0px) brightness(1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Sección que está saliendo */
+.content-section.section-leaving {
+  opacity: 0.2;
+  transform: scale(0.85) rotateY(-15deg) translateX(-80px);
+  filter: blur(8px) brightness(0.4);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sección que está entrando */
+.content-section.section-entering {
+  opacity: 0.5;
+  transform: scale(0.95) rotateY(5deg) translateX(30px);
+  filter: blur(2px) brightness(0.9);
+  transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animaciones de contenido interno */
+.content-section > * {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-delay: 0.1s;
+}
+
+.content-section.section-active > * {
+  opacity: 1;
+  transform: translateY(0px) scale(1);
+  animation: floatingElements 6s ease-in-out infinite;
+}
+
+/* Efectos de partículas y brillo */
+.content-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.content-section.section-active::before {
+  transform: translateX(100%);
+}
+
+/* Efectos específicos por sección */
+.section-about {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.section-about.section-active {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+  box-shadow: 0 0 30px rgba(0, 123, 255, 0.15);
+}
+
+.section-experience {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.section-experience.section-active {
+  background: linear-gradient(135deg, #f0fff0 0%, #e6ffe6 100%);
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.15);
+}
+
+.section-projects {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+.section-projects.section-active {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
+}
+
+.section-hero {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #8b5cf6 100%);
+}
+
+.section-hero.section-active {
+  background: linear-gradient(135deg, #0a0a0a 0%, #8b5cf6 50%, #a855f7 100%);
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.4),
+    0 20px 40px rgba(139, 92, 246, 0.2);
+}
+
+/* Scrollbars personalizados */
+.right-column::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.right-column::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.right-column::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #000000, #4d4d4d);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.right-column::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(77, 77, 77, 0.8));
+}
+
+/* Animaciones */
+@keyframes floatingElements {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-5px) rotate(0.5deg);
+  }
+  66% {
+    transform: translateY(3px) rotate(-0.5deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 25px 50px rgba(0, 0, 0, 0.15),
+      0 0 30px rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes surpriseEntry {
+  0% {
+    transform: scale(0.8) rotateY(20deg) translateX(100px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05) rotateY(-5deg) translateX(-10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) rotateY(0deg) translateX(0px);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .two-column-layout {
+    flex-direction: column;
+  }
+
+  .left-column {
+    width: 100vw;
+    height: 50vh;
+    position: relative;
+    padding: 1rem;
+  }
+
+  .right-column {
+    width: 100vw;
+    height: 50vh;
+    margin-left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content-section {
+    min-width: 100vw;
+    width: 100vw;
+    height: auto;
+    min-height: 50vh;
+    padding: 2rem 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Estilos para el botón de toggle */
+.interactive-toggle {
+  position: fixed;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001; /* Por encima de todo */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.interactive-toggle:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.interactive-toggle.active {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  border-color: #8b5cf6;
+}
+
+.interactive-toggle .arrow-icon {
+  width: 20px;
+  height: 20px;
+  border-left: 3px solid #ffffff;
+  border-bottom: 3px solid #ffffff;
+  transform: rotate(45deg); /* Flecha apuntando a la izquierda */
+  transition: transform 0.3s ease;
+}
+
+.interactive-toggle.active .arrow-icon {
+  transform: rotate(-135deg); /* Flecha apuntando a la derecha */
+}
+
+/* Estilos para el modo interactivo */
+.two-column-layout.interactive-mode .left-column {
+  transform: translateX(
+    -100%
+  ); /* Desplaza la columna izquierda fuera de la vista */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.two-column-layout.interactive-mode .right-column {
+  width: 100vw; /* Asegura que ocupe todo el ancho del viewport */
+  margin-left: 0;
+}
+
+.two-column-layout.interactive-mode .content-section {
+  min-width: 50vw; /* Para mostrar dos secciones a la vez */
+  width: 50vw;
+}

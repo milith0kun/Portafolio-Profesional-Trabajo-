@@ -1,0 +1,94 @@
+.normal-layout {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.view-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  z-index: 1000;
+  font-size: 14px;
+}
+
+.view-indicator span {
+  display: block;
+  margin: 2px 0;
+}
+
+.normal-sections-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.normal-section-left,
+.normal-section-right {
+  width: 50%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.normal-section-left {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #8b5cf6 100%);
+}
+
+.normal-section-right {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.navigation-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.navigation-controls button {
+  padding: 10px 15px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navigation-controls button:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.navigation-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Animaciones para las transiciones */
+.normal-section-left,
+.normal-section-right {
+  animation: sectionFadeIn 0.6s ease-out;
+}
+
+@keyframes sectionFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

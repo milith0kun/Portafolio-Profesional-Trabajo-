@@ -22,7 +22,7 @@ export const contactFormSchema = z.object({
     .string()
     .min(10, 'El mensaje debe tener al menos 10 caracteres')
     .max(2000, 'El mensaje no puede exceder 2000 caracteres')
-    .trim(),
+    .trim()
 })
 
 // Validación para crear/editar proyectos
@@ -47,24 +47,18 @@ export const projectSchema = z.object({
     .number()
     .int()
     .positive('Debe seleccionar una categoría válida'),
-  status: z
-    .enum(['draft', 'published', 'archived'])
-    .default('draft'),
-  priority: z
-    .number()
-    .int()
-    .min(0)
-    .max(10)
-    .default(0),
-  featured: z
-    .boolean()
-    .default(false),
+  status: z.enum(['draft', 'published', 'archived']).default('draft'),
+  priority: z.number().int().min(0).max(10).default(0),
+  featured: z.boolean().default(false),
   slug: z
     .string()
     .min(3, 'El slug debe tener al menos 3 caracteres')
     .max(200, 'El slug no puede exceder 200 caracteres')
-    .regex(/^[a-z0-9-]+$/, 'El slug solo puede contener letras minúsculas, números y guiones')
-    .trim(),
+    .regex(
+      /^[a-z0-9-]+$/,
+      'El slug solo puede contener letras minúsculas, números y guiones'
+    )
+    .trim()
 })
 
 // Validación para crear/editar posts del blog
@@ -89,16 +83,17 @@ export const blogPostSchema = z.object({
     .string()
     .min(3, 'El slug debe tener al menos 3 caracteres')
     .max(200, 'El slug no puede exceder 200 caracteres')
-    .regex(/^[a-z0-9-]+$/, 'El slug solo puede contener letras minúsculas, números y guiones')
+    .regex(
+      /^[a-z0-9-]+$/,
+      'El slug solo puede contener letras minúsculas, números y guiones'
+    )
     .trim(),
   categoryId: z
     .number()
     .int()
     .positive('Debe seleccionar una categoría válida')
     .optional(),
-  status: z
-    .enum(['draft', 'published', 'archived'])
-    .default('draft'),
+  status: z.enum(['draft', 'published', 'archived']).default('draft'),
   seoTitle: z
     .string()
     .max(60, 'El título SEO no puede exceder 60 caracteres')
@@ -109,19 +104,12 @@ export const blogPostSchema = z.object({
     .max(160, 'La descripción SEO no puede exceder 160 caracteres')
     .trim()
     .optional(),
-  featuredImage: z
-    .string()
-    .url('Debe ser una URL válida')
-    .optional(),
+  featuredImage: z.string().url('Debe ser una URL válida').optional()
 })
 
 // Validación para parámetros de paginación
 export const paginationSchema = z.object({
-  page: z
-    .number()
-    .int()
-    .min(1, 'La página debe ser mayor a 0')
-    .default(1),
+  page: z.number().int().min(1, 'La página debe ser mayor a 0').default(1),
   limit: z
     .number()
     .int()
@@ -132,9 +120,7 @@ export const paginationSchema = z.object({
     .string()
     .max(50, 'El campo de ordenamiento no puede exceder 50 caracteres')
     .optional(),
-  orderDirection: z
-    .enum(['asc', 'desc'])
-    .default('desc'),
+  orderDirection: z.enum(['asc', 'desc']).default('desc')
 })
 
 // Validación para filtros de proyectos
@@ -147,12 +133,8 @@ export const projectFiltersSchema = z.object({
     .string()
     .max(100, 'La tecnología no puede exceder 100 caracteres')
     .optional(),
-  featured: z
-    .boolean()
-    .optional(),
-  status: z
-    .enum(['draft', 'published', 'archived'])
-    .optional(),
+  featured: z.boolean().optional(),
+  status: z.enum(['draft', 'published', 'archived']).optional()
 })
 
 // Validación para filtros de blog
@@ -165,12 +147,8 @@ export const blogFiltersSchema = z.object({
     .string()
     .max(100, 'La etiqueta no puede exceder 100 caracteres')
     .optional(),
-  status: z
-    .enum(['draft', 'published', 'archived'])
-    .optional(),
-  featured: z
-    .boolean()
-    .optional(),
+  status: z.enum(['draft', 'published', 'archived']).optional(),
+  featured: z.boolean().optional()
 })
 
 // Tipos derivados de los esquemas
@@ -179,4 +157,4 @@ export type ProjectData = z.infer<typeof projectSchema>
 export type BlogPostData = z.infer<typeof blogPostSchema>
 export type PaginationParams = z.infer<typeof paginationSchema>
 export type ProjectFilters = z.infer<typeof projectFiltersSchema>
-export type BlogFilters = z.infer<typeof blogFiltersSchema> 
+export type BlogFilters = z.infer<typeof blogFiltersSchema>

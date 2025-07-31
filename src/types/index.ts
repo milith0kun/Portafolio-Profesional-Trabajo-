@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    scrollTimeout: NodeJS.Timeout | undefined
+  }
+}
+
 // Tipos básicos del proyecto
 export interface Project {
   id: number
@@ -115,7 +121,7 @@ export interface ContactFormData {
 }
 
 // Tipos para respuestas de API
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
   error?: string
@@ -155,4 +161,20 @@ export interface BlogFilters {
   tag?: string
   status?: string
   featured?: boolean
-} 
+}
+
+// Interface para trabajos/experiencia
+export interface Job {
+  title: string
+  period: string
+  company: string
+  description: string
+  technologies: string[]
+}
+
+// Interface simple para proyectos (para uso en componentes)
+export interface SimpleProject {
+  title: string
+  description: string
+  technologies: string[]
+}

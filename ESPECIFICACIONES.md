@@ -41,6 +41,7 @@ src/
 ## Esquema de Base de Datos
 
 ### Tablas Principales
+
 ```sql
 -- Gestión de proyectos
 projects (id, title, description, long_description, category_id, status, priority, featured, created_at, updated_at)
@@ -64,6 +65,7 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 ## Estructura de Páginas
 
 ### Páginas Requeridas
+
 1. **Inicio (/)** - Sección hero, proyectos destacados, CTA de contacto
 2. **Sobre Mí (/sobre-mi)** - Experiencia profesional, habilidades, educación
 3. **Proyectos (/proyectos)** - Showcase de proyectos categorizados con filtros
@@ -73,13 +75,15 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 7. **Contacto (/contacto)** - Formulario de contacto e información profesional
 
 ### Categorías de Proyectos
+
 - **Desarrollo Web** (3 proyectos)
-- **Desarrollo Móvil** (3 proyectos)  
+- **Desarrollo Móvil** (3 proyectos)
 - **Análisis de Datos** (3 proyectos)
 
 ## Funcionalidades Clave por Fase de Desarrollo
 
 ### Fase 1 - MVP (2-3 semanas)
+
 - [x] Diseño responsivo para todos los dispositivos
 - [x] Página de inicio estática con sección hero
 - [x] Grid de proyectos con filtrado básico
@@ -87,6 +91,7 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 - [x] Enfoque mobile-first en el diseño
 
 ### Fase 2 - Funcionalidad Core (2-3 semanas)
+
 - [ ] Integración de base de datos MySQL
 - [ ] Páginas dinámicas de proyectos
 - [ ] Sistema de filtrado avanzado
@@ -94,6 +99,7 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 - [ ] Implementación SEO básica
 
 ### Fase 3 - Blog y Optimización (3-4 semanas)
+
 - [ ] Sistema de blog completo
 - [ ] Optimización SEO avanzada
 - [ ] Integración de analíticas
@@ -101,6 +107,7 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 - [ ] Optimización de rendimiento
 
 ### Fase 4 - Funcionalidades Avanzadas (2-3 semanas)
+
 - [ ] Panel de administración
 - [ ] Sistema de comentarios
 - [ ] Integración de newsletter
@@ -109,18 +116,21 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 ## Requerimientos de Diseño
 
 ### Principios de Diseño
+
 - **Estética minimalista** - Diseño limpio, enfocado en contenido
 - **Apariencia profesional** - Identidad visual amigable para empresas
 - **Enfoque mobile-first** - Responsivo en todos los dispositivos
 - **Carga rápida** - Optimizado para rendimiento
 
 ### Dispositivos Objetivo
+
 - Desktop: 1920px+ (enfoque principal)
 - Tablet: 768px - 1024px
 - Móvil: 320px - 767px
 - Soporte para orientaciones portrait y landscape
 
 ### Esquema de Colores
+
 - Primario: Tonos oscuros/neutros profesionales
 - Acento: Destacados de color estratégicos
 - Fondo: Blancos/grises claros limpios
@@ -129,11 +139,13 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 ## Requerimientos de Rendimiento
 
 ### Objetivos Core Web Vitals
+
 - **LCP (Largest Contentful Paint):** < 2.5 segundos
-- **FID (First Input Delay):** < 100 milisegundos  
+- **FID (First Input Delay):** < 100 milisegundos
 - **CLS (Cumulative Layout Shift):** < 0.1
 
 ### Estrategias de Optimización
+
 - Optimización de imágenes con formatos WebP/AVIF
 - Lazy loading para imágenes y componentes
 - Code splitting y tree shaking
@@ -143,6 +155,7 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 ## Implementación de Seguridad
 
 ### Medidas de Seguridad Requeridas
+
 - Rate limiting para endpoints de API
 - Validación de inputs con esquemas Zod
 - Protección XSS con Content Security Policy
@@ -154,7 +167,9 @@ site_analytics (id, page_path, visitor_id, session_id, timestamp, user_agent, re
 ## Estrategia de Contenido
 
 ### Información Requerida por Proyecto
+
 Para cada proyecto, incluir:
+
 - Título del proyecto y descripción breve
 - Descripción técnica detallada
 - Tecnologías utilizadas (etiquetadas para filtrado)
@@ -164,6 +179,7 @@ Para cada proyecto, incluir:
 - Características clave y desafíos resueltos
 
 ### Plan de Contenido del Blog
+
 - Tutoriales técnicos y guías
 - Casos de estudio de proyectos
 - Tendencias e insights de la industria
@@ -173,6 +189,7 @@ Para cada proyecto, incluir:
 ## Lineamientos de Desarrollo
 
 ### Estándares de Calidad de Código
+
 - TypeScript para seguridad de tipos
 - ESLint + Prettier para consistencia de código
 - Arquitectura basada en componentes
@@ -180,12 +197,14 @@ Para cada proyecto, incluir:
 - Manejo integral de errores
 
 ### Estrategia de Testing
+
 - Tests unitarios para funciones utilitarias
 - Testing de componentes con React Testing Library
 - Tests de integración para endpoints de API
 - Testing end-to-end para flujos críticos de usuario
 
 ### Pipeline de Despliegue
+
 - GitHub Actions para CI/CD
 - Testing automatizado antes del despliegue
 - Configuraciones específicas por ambiente
@@ -195,6 +214,7 @@ Para cada proyecto, incluir:
 ## Estrategia SEO
 
 ### SEO Técnico
+
 - Optimizaciones SEO integradas de Next.js
 - Implementación de meta tags y Open Graph
 - Generación de XML sitemap
@@ -202,6 +222,7 @@ Para cada proyecto, incluir:
 - Optimización de velocidad de página
 
 ### SEO de Contenido
+
 - Contenido de blog optimizado por palabras clave
 - Estrategia de enlaces internos
 - Actualizaciones regulares de contenido
@@ -210,6 +231,7 @@ Para cada proyecto, incluir:
 ## Analíticas y Monitoreo
 
 ### Tracking Requerido
+
 - Integración con Google Analytics 4
 - Tracking de eventos personalizados para:
   - Interacciones de visualización de proyectos
@@ -218,6 +240,7 @@ Para cada proyecto, incluir:
   - Clics en descargas/enlaces externos
 
 ### Monitoreo de Rendimiento
+
 - Real User Monitoring (RUM)
 - Tracking y reporte de errores
 - Rendimiento de consultas de base de datos
@@ -226,6 +249,7 @@ Para cada proyecto, incluir:
 ## Requerimientos de Lanzamiento
 
 ### Checklist Pre-Lanzamiento
+
 - [ ] Todos los proyectos desplegados y accesibles
 - [ ] Formulario de contacto probado y funcional
 - [ ] Meta tags SEO implementados
@@ -236,6 +260,7 @@ Para cada proyecto, incluir:
 - [ ] Compatibilidad cross-browser probada
 
 ### Tareas Post-Lanzamiento
+
 - [ ] Enviar sitemap a Google Search Console
 - [ ] Configurar objetivos en Google Analytics
 - [ ] Monitorear Core Web Vitals
@@ -245,6 +270,7 @@ Para cada proyecto, incluir:
 ## Métricas de Éxito
 
 ### KPIs Principales
+
 - Visitantes únicos mensuales
 - Tiempo de engagement en páginas de proyectos
 - Tasa de conversión del formulario de contacto
@@ -252,6 +278,7 @@ Para cada proyecto, incluir:
 - Mejoras en ranking de motores de búsqueda
 
 ### Métricas Técnicas
+
 - Puntuaciones de velocidad de página
 - Porcentaje de uptime del servidor
 - Monitoreo de tasa de errores
@@ -260,6 +287,7 @@ Para cada proyecto, incluir:
 ## Mejoras Futuras
 
 ### Funcionalidades Potenciales
+
 - Soporte multi-idioma (i18n)
 - Capacidades de Progressive Web App
 - Filtrado avanzado de portafolio

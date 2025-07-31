@@ -1,33 +1,29 @@
 .about-section {
-  margin: 2rem 0 5rem;
-  text-align: center;
-  width: 100%;
-  position: relative;
-  z-index: 5;
-  padding-top: 1rem;
+  margin: 0;
+  text-align: left;
 }
 
-.about-content {
-  margin-bottom: 3rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+.about-text {
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .about-intro {
-  color: #b794f4;
+  color: #171717;
   margin-bottom: 1rem;
   line-height: 1.6;
   font-size: 1.1rem;
 }
 
-.about-current, .about-past {
-  color: #a0aec0;
+.about-current,
+.about-past,
+.about-hobby {
+  color: #171717;
   margin-top: 1.5rem;
   line-height: 1.6;
 }
 
 .highlight {
-  color: #b794f4;
-  font-weight: 500;
+  color: #000;
+  font-weight: 600;
 }

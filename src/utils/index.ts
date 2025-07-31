@@ -1,11 +1,3 @@
-import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
-
-// Utilidad para combinar clases de Tailwind CSS
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-
 // Generar slug a partir de texto
 export function generateSlug(text: string): string {
   return text
@@ -19,17 +11,20 @@ export function generateSlug(text: string): string {
 }
 
 // Formatear fechas
-export function formatDate(date: Date | string, locale: string = 'es-ES'): string {
+export function formatDate(
+  date: Date | string,
+  locale: string = 'es-ES'
+): string {
   const dateObj = typeof date === 'string' ? new Date(date) : date
   return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
-    day: 'numeric',
+    day: 'numeric'
   }).format(dateObj)
 }
 
 // Formatear fecha relativa
-export function formatRelativeDate(date: Date | string, locale: string = 'es-ES'): string {
+export function formatRelativeDate(date: Date | string): string {
   const dateObj = typeof date === 'string' ? new Date(date) : date
   const now = new Date()
   const diffInMs = now.getTime() - dateObj.getTime()
@@ -56,7 +51,7 @@ export function isValidEmail(email: string): boolean {
 }
 
 // Debounce función
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -73,18 +68,25 @@ export function capitalize(text: string): string {
 }
 
 // Generar excerpt del contenido
-export function generateExcerpt(content: string, maxLength: number = 160): string {
+export function generateExcerpt(
+  content: string,
+  maxLength: number = 160
+): string {
   // Remover HTML tags si los hay
   const plainText = content.replace(/<[^>]*>/g, '')
   return truncateText(plainText, maxLength)
 }
 
 // Ordenar objetos por propiedad
-export function sortBy<T>(array: T[], key: keyof T, direction: 'asc' | 'desc' = 'asc'): T[] {
+export function sortBy<T>(
+  array: T[],
+  key: keyof T,
+  direction: 'asc' | 'desc' = 'asc'
+): T[] {
   return [...array].sort((a, b) => {
     const aVal = a[key]
     const bVal = b[key]
-    
+
     if (aVal < bVal) return direction === 'asc' ? -1 : 1
     if (aVal > bVal) return direction === 'asc' ? 1 : -1
     return 0
@@ -92,13 +94,19 @@ export function sortBy<T>(array: T[], key: keyof T, direction: 'asc' | 'desc' = 
 }
 
 // Agrupar objetos por propiedad
-export function groupBy<T, K extends keyof T>(array: T[], key: K): Record<string, T[]> {
-  return array.reduce((groups, item) => {
-    const groupKey = String(item[key])
-    if (!groups[groupKey]) {
-      groups[groupKey] = []
-    }
-    groups[groupKey].push(item)
-    return groups
-  }, {} as Record<string, T[]>)
-} 
+export function groupBy<T, K extends keyof T>(
+  array: T[],
+  key: K
+): Record<string, T[]> {
+  return array.reduce(
+    (groups, item) => {
+      const groupKey = String(item[key])
+      if (!groups[groupKey]) {
+        groups[groupKey] = []
+      }
+      groups[groupKey].push(item)
+      return groups
+    },
+    {} as Record<string, T[]>
+  )
+}
