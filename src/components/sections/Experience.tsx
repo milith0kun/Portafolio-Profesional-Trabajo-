@@ -1,15 +1,16 @@
 import React from 'react'
-import './experience.css'
 import { experienceData } from '../../lib/data'
-import JobItem from './JobItem'
+import ExperienceCard from '../sections/Experience/ExperienceCard'
+import './experience.css'
 
 const Experience: React.FC = () => {
   return (
-    <section id="experience" className="experience-section animate-on-scroll">
-      <div className="content-wrapper">
+    <section className="experience-section">
+      <div className="experience-container">
+        <h2>Experiencia</h2>
         <div className="experience-list">
           {experienceData.map((job, index) => (
-            <JobItem key={index} job={job} />
+            <ExperienceCard key={index} job={job} />
           ))}
         </div>
       </div>

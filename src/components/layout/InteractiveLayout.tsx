@@ -1,157 +1,143 @@
+
 'use client'
 
-import React, { useState, useEffect, useRef, useCallback } from 'react'
-import Hero from '../sections/Hero'
-import About from '../sections/About'
-import Experience from '../sections/Experience'
-import Projects from '../sections/Projects'
-import './interactive-layout.css' // Nuevo archivo CSS para este layout
+import React, { useEffect, useState } from 'react'
+import './interactive-layout.css'
+import { Hero, About, Experience, Projects } from '../sections'
 
 interface InteractiveLayoutProps {
-  onNavigateToSection: (sectionId: string) => void
+  currentPage: number
+  onPageChange: (page: number) => void
 }
 
-const InteractiveLayout: React.FC<InteractiveLayoutProps> = ({ onNavigateToSection }) => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const [currentSection, setCurrentSection] = useState(0)
-  const [isScrolling, setIsScrolling] = useState(false)
-  const sectionsRef = useRef<HTMLElement[]>([])
-  const currentSectionRef = useRef(0)
+const InteractiveLayout: React.FC<InteractiveLayoutProps> = ({ currentPage, onPageChange }) => {
+  const [isMobile, setIsMobile] = useState(false)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  
+  // Array de todos los componentes disponibles
+  const components = [Hero, About, Experience, Projects]
+  const totalPages = components.length
+  
+  // Componente izquierdo: componente actual
+  const LeftComponent = components[currentPage]
+  // Componente derecho: siguiente componente (con ciclo)
+  const RightComponent = components[(currentPage + 1) % totalPages]
 
-  // Mantener currentSectionRef sincronizado
+  // Detectar si es móvil
   useEffect(() => {
-    currentSectionRef.current = currentSection
-  }, [currentSection])
-
-  // Inicializar referencias de secciones
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      sectionsRef.current = Array.from(
-        scrollContainerRef.current.querySelectorAll('.content-section')
-      )
-      // Asegurarse de que la primera sección (o las dos primeras en modo interactivo) esté activa al cargar o cambiar de modo
-      if (sectionsRef.current.length > 0) {
-        sectionsRef.current[0].classList.add('section-active')
-        if (sectionsRef.current.length > 1) {
-          sectionsRef.current[1].classList.add('section-active')
-        }
-
-        setTimeout(() => {
-          if (sectionsRef.current[0]) {
-            const children0 = sectionsRef.current[0].children
-            Array.from(children0).forEach(child => {
-              ;(child as HTMLElement).style.opacity = '1'
-              ;(child as HTMLElement).style.transform =
-                'translateY(0px) scale(1)'
-            })
-          }
-          if (sectionsRef.current.length > 1 && sectionsRef.current[1]) {
-            const children1 = sectionsRef.current[1].children
-            Array.from(children1).forEach(child => {
-              ;(child as HTMLElement).style.opacity = '1'
-              ;(child as HTMLElement).style.transform =
-                'translateY(0px) scale(1)'
-            })
-          }
-        }, 100)
-      }
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 767)
     }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Función para manejar animaciones de sección
-  const handleSectionAnimations = useCallback((newSection: number) => {
-    sectionsRef.current.forEach((section, index) => {
-      if (section) {
-        section.classList.remove('section-active')
-        section.style.animation = ''
-
-        // En modo interactivo, dos secciones están activas
-        if (index === newSection || index === newSection + 1) {
-          section.classList.add('section-active')
-          // Solo aplicar animación de entrada si es la primera vez que se activa o si se está moviendo
-          if (currentSectionRef.current !== newSection) {
-            section.style.animation =
-              'surpriseEntry 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-          }
-        }
-      }
-    })
-  }, [])
-
-  // Detectar cambios de scroll
+  // Navegación por teclado y scroll
   useEffect(() => {
-    const handleScroll = () => {
-      if (scrollContainerRef.current) {
-        const scrollLeft = scrollContainerRef.current.scrollLeft
-        const sectionWidth = 0.5 * window.innerWidth // Cada sección ocupa 50vw
-        const newSection = Math.round(scrollLeft / sectionWidth)
-
-        if (newSection !== currentSectionRef.current) {
-          handleSectionAnimations(newSection)
-          setCurrentSection(newSection)
-        }
-
-        setIsScrolling(true)
-        clearTimeout(window.scrollTimeout)
-        window.scrollTimeout = setTimeout(() => {
-          setIsScrolling(false)
-        }, 150)
+    const handleScroll = (e: WheelEvent) => {
+      e.preventDefault()
+      if (e.deltaY > 0) {
+        onPageChange((currentPage + 1) % totalPages)
+      } else if (e.deltaY < 0) {
+        onPageChange(currentPage === 0 ? totalPages - 1 : currentPage - 1)
       }
     }
 
-    const container = scrollContainerRef.current
-    if (container) {
-      container.addEventListener('scroll', handleScroll)
-      return () => container.removeEventListener('scroll', handleScroll)
-    }
-  }, [handleSectionAnimations])
-
-  // Convertir scroll vertical en horizontal
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (scrollContainerRef.current) {
-        e.preventDefault()
-        e.stopPropagation()
-
-        const scrollSpeed = isScrolling ? 3 : 1.5
-        const scrollAmount = e.deltaY > 0 ? 0.5 * window.innerWidth : -0.5 * window.innerWidth
-
-        scrollContainerRef.current.scrollLeft += scrollAmount
-
-        if (scrollContainerRef.current.style.filter !== 'brightness(1.1)') {
-          scrollContainerRef.current.style.filter = 'brightness(1.1)'
-          scrollContainerRef.current.style.transition = 'filter 0.1s ease'
-
-          setTimeout(() => {
-            if (scrollContainerRef.current) {
-              scrollContainerRef.current.style.filter = 'brightness(1)'
-            }
-          }, 100)
-        }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        onPageChange((currentPage + 1) % totalPages)
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        onPageChange(currentPage === 0 ? totalPages - 1 : currentPage - 1)
       }
     }
 
-    document.addEventListener('wheel', handleWheel, { passive: false })
-    return () => document.removeEventListener('wheel', handleWheel)
-  }, [isScrolling])
+    // Solo agregar eventos de scroll en desktop
+    if (!isMobile) {
+      window.addEventListener('wheel', handleScroll, { passive: false })
+    }
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('wheel', handleScroll)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [currentPage, onPageChange, totalPages, isMobile])
+
+  // Navegación táctil para móviles (horizontal)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) {
+      onPageChange((currentPage + 1) % totalPages)
+    }
+    if (isRightSwipe) {
+      onPageChange(currentPage === 0 ? totalPages - 1 : currentPage - 1)
+    }
+  }
 
   return (
-    <div className="two-column-layout interactive-mode" ref={scrollContainerRef}>
-      {/* Hero como primera sección en modo interactivo */}
-      <section className="content-section section-hero">
-        <Hero onNavigateToSection={onNavigateToSection} />
-      </section>
-
-      {/* Columna derecha con scroll horizontal - Secciones */}
-      <section className="content-section section-about">
-        <About />
-      </section>
-      <section className="content-section section-experience">
-        <Experience />
-      </section>
-      <section className="content-section section-projects">
-        <Projects />
-      </section>
+    <div 
+      className={`interactive-layout ${isMobile ? 'mobile' : 'desktop'}`}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Lado izquierdo - componente actual */}
+      <div className="interactive-layout__left">
+        <LeftComponent />
+      </div>
+      
+      {/* Lado derecho - siguiente componente */}
+      <div className="interactive-layout__right">
+        <RightComponent />
+      </div>
+      
+      {/* Indicadores de página */}
+      <div className="interactive-layout__pagination">
+        {components.map((_, index) => (
+          <button
+            key={index}
+            className={`pagination-dot ${currentPage === index ? 'active' : ''}`}
+            onClick={() => onPageChange(index)}
+            aria-label={`Ir a página ${index + 1}`}
+          >
+            {isMobile ? '' : index + 1}
+          </button>
+        ))}
+      </div>
+      
+      {/* Indicador de qué componentes se están mostrando */}
+      {!isMobile && (
+        <div className="interactive-layout__component-indicator">
+          <span className="component-name left">{components[currentPage].name}</span>
+          <span className="separator">+</span>
+          <span className="component-name right">{components[(currentPage + 1) % totalPages].name}</span>
+        </div>
+      )}
+      
+      {/* Indicador de navegación móvil */}
+      {isMobile && (
+        <div className="mobile-nav-hint">
+          <span>Desliza ← → para navegar</span>
+        </div>
+      )}
     </div>
   )
 }

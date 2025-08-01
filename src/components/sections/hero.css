@@ -1,0 +1,235 @@
+/* ===== HERO SECTION STYLES - DISEÑO MINIMALISTA ===== */
+/* Estilo ultra minimalista con fondo blanco y tipografía pequeña */
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 2rem 2rem 2rem;
+}
+
+.hero-section::before,
+.hero-section::after {
+  display: none;
+}
+
+.hero-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-top: 2rem;
+}
+
+.hero-container::before {
+  display: none;
+}
+
+/* ===== ESTILOS PARA HERO CONTENT - TIPOGRAFÍA PEQUEÑA ===== */
+.hero-content {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-content h2 {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: #666666;
+  margin-bottom: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.hero-content p {
+  font-size: 0.95rem;
+  color: #666666;
+  line-height: 1.5;
+  max-width: 500px;
+  margin-bottom: 0;
+}
+
+/* ===== ESTILOS PARA LISTA DE TECNOLOGÍAS ===== */
+.technology-list {
+  margin: 1rem 0;
+}
+
+.technology-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.technology-list li {
+  background: #f8f9fa;
+  color: #333333;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #e9ecef;
+}
+
+/* ===== ESTILOS PARA BOTONES ===== */
+.hero-container button {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.hero-container button:hover {
+  background: #333333;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 2rem 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-container {
+    max-width: 90%;
+    text-align: center;
+    align-items: center;
+    margin-top: 0;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-content h2 {
+    font-size: 1rem;
+  }
+  
+  .hero-content p {
+    font-size: 0.9rem;
+  }
+  
+  .technology-list ul {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .hero-container {
+    max-width: 95%;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .hero-content h2 {
+    font-size: 0.95rem;
+  }
+  
+  .hero-content p {
+    font-size: 0.85rem;
+  }
+  
+  .technology-list li {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+  }
+}
+
+/* ===== ANIMATIONS SUTILES ===== */
+
+.hero-container {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+.hero-container:focus-within {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-container {
+    animation: none;
+  }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+
+@media (prefers-color-scheme: dark) {
+  .hero-section {
+    background: #1a1a1a;
+  }
+  
+  .hero-content h1 {
+    color: #ffffff;
+  }
+  
+  .hero-content h2,
+  .hero-content p {
+    color: #cccccc;
+  }
+  
+  .technology-list li {
+    background: #2a2a2a;
+    color: #cccccc;
+    border-color: #404040;
+  }
+  
+  .hero-container button {
+    background: #ffffff;
+    color: #000000;
+  }
+  
+  .hero-container button:hover {
+    background: #e0e0e0;
+  }
+}

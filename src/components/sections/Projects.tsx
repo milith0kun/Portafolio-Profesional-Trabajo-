@@ -1,12 +1,13 @@
 import React from 'react'
-import './projects.css'
 import { projectsData } from '../../lib/data'
 import ProjectCard from './Projects/ProjectCard'
+import './projects.css'
 
 const Projects: React.FC = () => {
   return (
-    <section id="projects" className="projects-section animate-on-scroll">
-      <div className="content-wrapper">
+    <section className="projects-section">
+      <div className="projects-container">
+        <h2>Proyectos</h2>
         <div className="projects-grid">
           {projectsData.map((project, index) => (
             <ProjectCard key={index} project={project} />
@@ -17,5 +18,4 @@ const Projects: React.FC = () => {
   )
 }
 
-export default Projects
-
+export default Projects 
